@@ -32,10 +32,7 @@
         return $result;
     }
 
-    $json = CallAPI('POST', 'localhost:8081');
-    
 
-    $aff = json_decode($json,true);
 
         // On détermine sur quelle page on se trouve
     if(isset($_GET['page']) && !empty($_GET['page'])){
@@ -45,12 +42,33 @@
     }
     //var_dump($aff);
     ?>
+    
     <h1>Liste des villes</h1>
+    <form action="index.php" method="Get">
+        <p>rechercher une ville : <input type="text" name="ville" /></p>
+        <p><input type="submit" value="OK"></p>
+    
+    <?php
+    if($_GET['ville']){
+        $cons = 'localhost:8081/?ville='.$_GET['ville'];
+        $json = CallAPI('POST', $cons);
+        $aff = json_decode($json,true);
+        
+        echo $aff->id;
+        var_dump($json);
+        
+
+    }else{
+        $json = CallAPI('POST', 'localhost:8081');
+        $aff = json_decode($json,true);
+        
+        ?>
+            </form>
                 <table>
                     <thead>
                         <th>Nom</th>
                         <th>Code postal</th>
-                        <th>Code INSEE</th>
+                        <th>Code INSEE</th> 
                         <th>population</th>
                     </thead>
                     <tbody>
@@ -88,5 +106,10 @@
             </li>
         </ul>
     </nav>
+        <?php
+    }
+    ?>
+
+    
     
    

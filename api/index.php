@@ -15,8 +15,8 @@ try {
  $req->execute();
 
  if( !empty($_GET['ville']) ){
-	//Si le client a saisi une ville de depart, on filtre les données via MySQL
-	$req = $db->prepare("SELECT * FROM villes WHERE nom LIKE ville");
+    echo $_GET['ville'];
+	$req = $db->prepare("SELECT * FROM `villes` WHERE `nom` LIKE :ville");
 	$req->bindParam(':ville', $_GET['ville']);
 } else {
     $req = $db->prepare("SELECT * FROM villes");
